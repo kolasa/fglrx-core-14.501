@@ -831,6 +831,7 @@ KCL_ACPI_DevHandle ATI_API_CALL KCL_ACPI_GetAlternateHandle(KCL_ACPI_DevHandle p
 
 static acpi_status KCL_ACPI_Slot_No_Hotplug(KCL_ACPI_DevHandle handle, u32 lvl, void *data, void **rv)
 {
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,17,0)
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,12,7)
    struct acpi_device *tdev = NULL;
    struct pci_dev *pdev = (struct pci_dev *)data;
@@ -845,6 +846,7 @@ static acpi_status KCL_ACPI_Slot_No_Hotplug(KCL_ACPI_DevHandle handle, u32 lvl, 
          tdev->flags.no_hotplug = true;
       }
    }
+#endif
 #endif
    return 0;
 }
